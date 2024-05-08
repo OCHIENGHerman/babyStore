@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { productsUrl } from './urls';
+import { productsUrl, addToCartUrl } from './urls';
+import axios from 'axios';
+import { useUser } from '../hooks/useUser';
+import { useCart } from '../hooks/useCart';
 
 interface Product {
   id: number;
@@ -14,11 +17,10 @@ interface Product {
   updated_at: string | null;
 }
 
-interface ProductsProps {
-  addToCart: (product: Product) => void;
-}
+const Products: React.FC = () => {
+  const { user } = useUser();
+  const { addItemsToCart } = useCart();
 
-function Products({ addToCart }: ProductsProps) {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -34,6 +36,31 @@ function Products({ addToCart }: ProductsProps) {
 
     fetchProducts();
   }, []);
+
+  const addToCart = async (product: Product) => {
+    try {
+      if (!user) {
+        console.log('User not logged in');
+        return;
+      }
+
+      console.log('User ID:', user?.id);
+
+      await axios.post(addToCartUrl, {
+        user_id: user?.id,
+        product_id: product.id,
+        quantity: 1,
+      });
+
+      addItemsToCart({
+        user_id: user?.id,
+        product_id: product.id,
+        quantity: 1,
+      });
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -62,7 +89,6 @@ function Products({ addToCart }: ProductsProps) {
             <button onClick={() => addToCart(product)} className="absolute bottom-2 left-2 right-2 bg-cyan-700 text-white px-2 py-1 rounded-lg transition-colors duration-300 hover:bg-cyan-800 active:scale-95">Add to Cart
             </button>
             </div>
-           
           </div>
         ))}
       </div>

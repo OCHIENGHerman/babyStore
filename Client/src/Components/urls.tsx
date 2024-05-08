@@ -12,4 +12,5 @@ export const userUrl = `${BASE_URL}/users`
 //Cart Urls
 export const addToCartUrl = `${BASE_URL}/carts`
 export const removeFromCartUrl = `${BASE_URL}/carts/{id}`
+export const getCartItemsByUserId = `${BASE_URL}/users/{userId}/cart`
 
