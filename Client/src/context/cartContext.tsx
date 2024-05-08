@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useState } from 'react'
-
 interface Cart
  {
     id: number;

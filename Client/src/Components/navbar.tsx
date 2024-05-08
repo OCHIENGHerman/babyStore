@@ -1,4 +1,3 @@
-import React from 'react';
 import { useUser } from "../hooks/useUser";
 import { useNavigate, Link } from "react-router-dom";
 import SearchBar from './searchbar';
