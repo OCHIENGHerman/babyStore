@@ -13,6 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
+    public function getAllUsers()
+    {
+        $users = User::all();
+
+        return response()->json($users);
+    }
     public function createUser(Request $request)
     {
         $validator = Validator::make($request->only('firstname', 'lastname', 'email', 'password'),[
