@@ -4,7 +4,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SelectedProductsController;
 use App\Http\Controllers\UserController;
-use App\Htt\Controllers\UserCartController;
+use App\Http\Controllers\UserCartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,7 +52,7 @@ Route::get('/users', [UserController::class, 'getAllUsers']);
 
 // Cart Routes
 Route::get('/users/{userId}/cart', [UserCartController::class, 'getCartItemsByUserId']);
-// Route::get('/carts', [CartController::class, 'getAllCartItems']);
+Route::get('/carts', [UserCartController::class, 'getAllCartItems']);
 Route::post('/carts', [UserCartController::class, 'addItemToCart']);
 // Route::put('/carts/{id}', [CartController::class, 'editCartItem']);
 // Route::delete('/carts/{id}', [CartController::class, 'deleteCartItem']);
