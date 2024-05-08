@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class UserCartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function getAllCartItems()
     {
         $cartItems = UserCart::all();
@@ -36,74 +33,28 @@ class UserCartController extends Controller
         }
     }
 
-    public function getAllCartItemsByUserId($userId)
+    public function editCartItem(Request $request, $id)
     {
-        $cartItems = UserCart::where('user_id', $userId)->get();
+        $cartItem = UserCart::findOrFail($id);
+
+        $request->validate([
+            'quantity' => ['required', 'integer', 'min:1']
+        ]);
+
+        $cartItem->update($request->all());
         return response()->json(
-            $cartItems
+            $cartItem, 200
         );
     }
 
-    public function editCartItem(Request $request)
-    {
-       $cartItem = UserCart::findOrFail($id);
-
-       $request->validate([
-        'quantity' => ['required', 'integer', 'min:1'],
-       ]);
-
-       $cartItem->update($request->all());
-       return response()->json($cartItem, 200);
-    }
-
-    public function deleteCartItem($id)
+    public function deleteCartItem(Request $request, $id)
     {
         $cartItem = UserCart::findOrFail($id);
 
         $cartItem->delete();
 
         return response()->json([
-            'message' => 'Cart deleted'
+            'message' => 'Cart deleteted successfully'
         ], 204);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(UserCart $userCart)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(UserCart $userCart)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, UserCart $userCart)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(UserCart $userCart)
-    {
-        //
     }
 }

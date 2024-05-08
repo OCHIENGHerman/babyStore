@@ -51,7 +51,6 @@ Route::group([
 Route::get('/users', [UserController::class, 'getAllUsers']);
 
 // Cart Routes
-Route::get('/users/{userId}/cart', [UserCartController::class, 'getCartItemsByUserId']);
 Route::get('/carts', [UserCartController::class, 'getAllCartItems']);
 Route::post('/carts', [UserCartController::class, 'addItemToCart']);
 Route::put('/carts/{id}', [UserCartController::class, 'editCartItem']);
