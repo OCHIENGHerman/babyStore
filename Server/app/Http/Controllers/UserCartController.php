@@ -19,9 +19,6 @@ class UserCartController extends Controller
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function addItemToCart(Request $request)
     {
         {
@@ -37,6 +34,37 @@ class UserCartController extends Controller
                 "Message" => "Added an Item to cart"
             ], 201);
         }
+    }
+
+    public function getAllCartItemsByUserId($userId)
+    {
+        $cartItems = UserCart::where('user_id', $userId)->get();
+        return response()->json(
+            $cartItems
+        );
+    }
+
+    public function editCartItem(Request $request)
+    {
+       $cartItem = UserCart::findOrFail($id);
+
+       $request->validate([
+        'quantity' => ['required', 'integer', 'min:1'],
+       ]);
+
+       $cartItem->update($request->all());
+       return response()->json($cartItem, 200);
+    }
+
+    public function deleteCartItem($id)
+    {
+        $cartItem = UserCart::findOrFail($id);
+
+        $cartItem->delete();
+
+        return response()->json([
+            'message' => 'Cart deleted'
+        ], 204);
     }
 
     /**
