@@ -2,28 +2,30 @@ import { useUser } from "../hooks/useUser";
 import { useNavigate, Link } from "react-router-dom";
 import SearchBar from './searchbar';
 import { ProductProvider } from '../context/productContext';
+import { useCart } from "../hooks/useCart";
 
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  image_url: string;
-  price: number;
-  quantity: number;
-  category: string;
-  created_at: string | null;
-  updated_at: string | null;
+// interface Product {
+//   id: number;
+//   name: string;
+//   description: string;
+//   image_url: string;
+//   price: number;
+//   quantity: number;
+//   category: string;
+//   created_at: string | null;
+//   updated_at: string | null;
 
-}
+// }
 
-interface NavbarProps {
-  cartItems: Product[];
-  cartCount: number;
-}
+// interface NavbarProps {
+//   cartItems: Product[];
+//   cartCount: number;
+// }
 
-function Navbar({ cartItems}: NavbarProps) {
+function Navbar() {
   const { user, logout } = useUser();
+  const { cart } = useCart ();
   const navigate = useNavigate();
  
   const handleLogout = () => {
@@ -82,7 +84,7 @@ function Navbar({ cartItems}: NavbarProps) {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />
                 </svg>
-                <span className="badge badge-sm indicator-item">{cartItems.length}</span>
+                <span className="badge badge-sm indicator-item">{cart?.length}</span>
               </div>
             </Link>
             <div
