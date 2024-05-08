@@ -10,17 +10,33 @@ class UserCartController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getAllCartItems()
     {
-        //
+        $cartItems = UserCart::all();
+
+        return response()->json(
+            $cartItems
+        );
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function addItemToCart(Request $request)
     {
-        //
+        {
+            $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'product_id' => 'required|exists:products,id',
+                'quantity' => 'required|integer|min:1',
+            ]);
+
+            $cartItem = UserCart::create($request->all());
+
+            return response()->json([
+                "Message" => "Added an Item to cart"
+            ], 201);
+        }
     }
 
     /**
