@@ -16,6 +16,14 @@ class UserCartController extends Controller
         );
     }
 
+    public function getCartItemsByUserId(Request $request, $userId)
+    {
+        $cartItems = UserCart::where('user_id', $userId)->get();
+        return response()->json(
+            $cartItems
+        );
+    }
+
     public function addItemToCart(Request $request)
     {
         {

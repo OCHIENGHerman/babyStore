@@ -55,6 +55,7 @@ Route::get('/carts', [UserCartController::class, 'getAllCartItems']);
 Route::post('/carts', [UserCartController::class, 'addItemToCart']);
 Route::put('/carts/{id}', [UserCartController::class, 'editCartItem']);
 Route::delete('/carts/{id}', [UserCartController::class, 'deleteCartItem']);
+Route::get('/users/{userId}/cart', [UserCartController::class, 'getCartItemsByUserId']);
 
 
 Route::group([
