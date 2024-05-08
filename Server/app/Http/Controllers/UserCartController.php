@@ -30,6 +30,11 @@ class UserCartController extends Controller
             $request->validate([
                 'user_id' => 'required|exists:users,id',
                 'product_id' => 'required|exists:products,id',
+            ]);
+
+            $quantity = $request->input('quantity', 1);
+
+            $request->validate([
                 'quantity' => 'required|integer|min:1',
             ]);
 
