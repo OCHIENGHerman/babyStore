@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useState } from 'react'
+import { getCartItemsByUserIdUrl } from '../Components/urls';
 
 interface  CartItems{
     user_id: number;
@@ -6,10 +7,21 @@ interface  CartItems{
     quantity: number;
 }
 
+interface Cart{
+    id: number;
+    user_id: number;
+    product_id: number;
+    quantity: number;
+    created_at: string | null;
+    updated_at: string | null;
+}
+
 export interface CartContextProps {
     cartItems: CartItems | null;
+    cart: Cart[] | null;
     addItemsToCart: (newCartItems:CartItems) => void;
     removeItemsFromCart: () => void;
+    getCartItemsByUserId: (userId: number) => void;
 }
 
 export const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -17,6 +29,7 @@ export const CartContext = createContext<CartContextProps | undefined>(undefined
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     const [cartItems, setCartItems] = useState<CartItems | null>(null);
+    const [cart, setCart] = useState<Cart[] | null>(null);
     
     const addItemsToCart = (newCartItems:CartItems) => {
         setCartItems(newCartItems);
@@ -29,11 +42,23 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     };
 
+    const getCartItemsByUserId = async (userId: number) => {
+        try {
+            const response = await fetch(`${getCartItemsByUserIdUrl}/${userId}`);
+            const data = await response.json();
+            setCart(data);
+        } catch (error) {
+            console.error('Error fetching cart items:', error);
+        }
+    };
+
 
     const contextValue: CartContextProps = {
         cartItems,
+        cart,
         addItemsToCart,
         removeItemsFromCart,
+        getCartItemsByUserId
     };
 
     return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
