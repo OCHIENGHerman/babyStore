@@ -4,25 +4,6 @@ import SearchBar from './searchbar';
 import { ProductProvider } from '../context/productContext';
 import { useCart } from "../hooks/useCart";
 
-
-// interface Product {
-//   id: number;
-//   name: string;
-//   description: string;
-//   image_url: string;
-//   price: number;
-//   quantity: number;
-//   category: string;
-//   created_at: string | null;
-//   updated_at: string | null;
-
-// }
-
-// interface NavbarProps {
-//   cartItems: Product[];
-//   cartCount: number;
-// }
-
 function Navbar() {
   const { user, logout } = useUser();
   const { cart } = useCart ();
