@@ -44,8 +44,9 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const getCartItemsByUserId = async (userId: number) => {
         try {
-            const response = await fetch(`${getCartItemsByUserIdUrl}/${userId}`);
+            const response = await fetch(`${getCartItemsByUserIdUrl.replace('{userId}', userId.toString())}`);
             const data = await response.json();
+            console.log("Cart items:", data);
             setCart(data);
         } catch (error) {
             console.error('Error fetching cart items:', error);
