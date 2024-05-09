@@ -4,6 +4,9 @@ import { getCartItemsByUserIdUrl } from '../Components/urls';
 interface  CartItems{
     user_id: number;
     product_id: number;
+    name: string,
+    image_url: string,
+    price: number,
     quantity: number;
 }
 
