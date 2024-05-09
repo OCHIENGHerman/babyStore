@@ -22,13 +22,13 @@ const Cart: React.FC = () => {
             {cart && cart.map((item) => (
               <div key={item.id} className="bg-white shadow-md rounded-lg p-4 mb-4">
                 <div className="flex items-center mb-2">
-                  {/* <img src={item.image_url} alt={item.name} className="w-12 h-12 object-cover mr-4" />
+                  <img src={item.image_url} alt={item.name} className="w-12 h-12 object-cover mr-4" />
                   <div>
                     <h2 className="text-lg font-bold">{item.name}</h2>
-                    <p>Price: ${item.price}</p> */}
+                    <p>Price: ${item.price}</p> 
                     <p>Quantity: {item.quantity}</p>
-                    {/* <p>Total: ${(item.price * item.quantity).toFixed(2)}</p>
-                  </div> */}
+                     {/* <p>Total: ${(item.price * item.quantity).toFixed(2)}</p> */}
+                  </div> 
                 </div>
                 {/* <div className="flex justify-end">
                   <button

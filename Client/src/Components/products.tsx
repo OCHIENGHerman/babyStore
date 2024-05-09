@@ -49,12 +49,18 @@ const Products: React.FC = () => {
       await axios.post(addToCartUrl, {
         user_id: user?.id,
         product_id: product.id,
+        name: product.name,
+        image_url: product.image_url,
+        price: product.price,
         quantity: 1,
       });
 
       addItemsToCart({
         user_id: user?.id,
         product_id: product.id,
+        name: product.name,
+        image_url: product.image_url,
+        price: product.price,
         quantity: 1,
       });
     } catch (error) {

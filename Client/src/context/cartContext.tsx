@@ -11,6 +11,9 @@ interface Cart{
     id: number;
     user_id: number;
     product_id: number;
+    name: string,
+    image_url: string,
+    price: number,
     quantity: number;
     created_at: string | null;
     updated_at: string | null;
