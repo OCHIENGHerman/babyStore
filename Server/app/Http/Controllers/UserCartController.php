@@ -32,9 +32,9 @@ class UserCartController extends Controller
         ), [
             'user_id' => ['required', 'exists:users,id'],
             'product_id' => ['required', 'exists:products,id'],
-            'name' => ['required', 'string'],
+            'name' => ['required', 'max:50', 'string'],
             'image_url' => ['required', 'string'],
-            'price' => ['required', 'number'],
+            'price' => ['required', 'integer'],
         ]);
 
         if ($validator->fails())
