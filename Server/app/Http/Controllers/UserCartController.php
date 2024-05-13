@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserCartController extends Controller
 {
-    public function getAllCartItems()
+    public function show()
     {
         $cartItems = UserCart::all();
 

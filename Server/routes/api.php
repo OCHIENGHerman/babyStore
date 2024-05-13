@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/products', [ProductsController::class, 'getProduct']);
+Route::get('/products', [ProductsController::class, 'show']);
 Route::get('/products/{id}', [ProductsController::class, 'singleProduct']);
 
 Route::post('/register', [UserController::class, 'createUser']);
@@ -51,7 +51,7 @@ Route::group([
 Route::get('/users', [UserController::class, 'getAllUsers']);
 
 // Cart Routes
-Route::get('/carts', [UserCartController::class, 'getAllCartItems']);
+Route::get('/carts', [UserCartController::class, 'show']);
 Route::post('/carts', [UserCartController::class, 'addItemToCart']);
 Route::put('/carts/{id}', [UserCartController::class, 'editCartItem']);
 Route::delete('/carts/{id}', [UserCartController::class, 'deleteCartItem']);

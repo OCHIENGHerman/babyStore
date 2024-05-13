@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
-    public function getProduct()
+    public function show()
     {
         $products = Products::all();
 
