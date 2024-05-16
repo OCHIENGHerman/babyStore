@@ -11,7 +11,10 @@
 ## stk Push
 1. Create Controller
 2. Set up api routes 
-3. Populate the .env file
+3. Populate the .env
+
+## Implement the Callback Url
+1. To store the response data "https://mpesa-docs.vercel.app/callback"
 
 ## Possible Errors 
 
