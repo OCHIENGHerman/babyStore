@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Categories;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,9 +13,9 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Categories::create(['name' => 'car_seats']);
-        Categories::create(['name' => 'feeding']);
-        Categories::create(['name' => 'gifts']);
-        Categories::create(['name' => 'strollers']);
+        Category::create(['name' => 'car_seats']);
+        Category::create(['name' => 'feeding']);
+        Category::create(['name' => 'gifts']);
+        Category::create(['name' => 'strollers']);
     }
 }

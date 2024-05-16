@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SelectedProductsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MpesaController;
@@ -26,8 +26,8 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/products', [ProductsController::class, 'getProduct']);
-Route::get('/products/{id}', [ProductsController::class, 'singleProduct']);
+Route::get('/products', [ProductController::class, 'getProduct']);
+Route::get('/products/{id}', [ProductController::class, 'singleProduct']);
 
 Route::post('/register', [UserController::class, 'createUser']);
 Route::post('/login', [UserController::class, 'login']);
@@ -51,14 +51,14 @@ Route::group([
 Route::group([
     "middleware" => ["auth:api", "admin"]
 ], function(){
-    Route::get('/admin/products', [ProductsController::class, 'getproduct']);
-    Route::post('/admin/addproduct', [ProductsController::class, 'addProduct']);
+    Route::get('/admin/products', [ProductController::class, 'getproduct']);
+    Route::post('/admin/addproduct', [ProductController::class, 'addProduct']);
     Route::get('/admin/users', [UserController::class,'allUser']);
     Route::get('/admin/singlecustomer/{id}', [UserController::class, 'singleCustomer']);
     Route::put('admin/updateuser', [UserController::class, 'editUser']);
     Route::delete('/admin/deleteuser/{id}', [UserController::class, 'deleteUser']);
-    Route::delete('/admin/deleteproduct/{id}', [ProductsController::class, 'deleteProduct']);
-    Route::put('/admin/updateproduct', [ProductsController::class,'editProduct']);
+    Route::delete('/admin/deleteproduct/{id}', [ProductController::class, 'deleteProduct']);
+    Route::put('/admin/updateproduct', [ProductController::class,'editProduct']);
 
     //orders
     Route::get('/number', [OrderController::class, 'numberOfOrders']);

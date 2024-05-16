@@ -2,15 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Products;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Product $product)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Product $product)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Product $product)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Product $product)
+    {
+        //
+    }
     public function getProduct()
     {
-        $products = Products::all();
+        $products = Product::all();
 
         return response()->json(
             $products
@@ -19,7 +74,7 @@ class ProductsController extends Controller
 
     public function singleProduct($id)
     {
-        $singleProduct = Products::find($id);
+        $singleProduct = Product::find($id);
 
         if (!$singleProduct){
             return response()->json([
@@ -53,7 +108,7 @@ class ProductsController extends Controller
             ]);
         }
 
-        Products::create([
+        Product::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'image_url' => $request->input('image_url'),
@@ -69,7 +124,7 @@ class ProductsController extends Controller
 
     public function editProduct (Request $request)
     {
-        $product = Products::where('id', $request->input('id'))->first();
+        $product = Product::where('id', $request->input('id'))->first();
 
         if ($product){
             $product->name = $request->input('name');
@@ -93,7 +148,7 @@ class ProductsController extends Controller
 
     public function deleteProduct($id)
     {
-        $product = Products::find($id);
+        $product = Product::find($id);
 
         $product->delete();
 

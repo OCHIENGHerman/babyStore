@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Products extends Model
+class Product extends Model
 {
     use HasFactory;
 
@@ -20,11 +20,11 @@ class Products extends Model
 
     public function category()
     {
-        return $this->belongsTo(Categories::class);
+        return $this->belongsTo(Category::class);
     }
 
-    public function selectedGoods()
+    public function order_item()
     {
-        return $this->hasMany(SelectedGoods::class);
+        return $this->hasMany(OrderItem::class);
     }
 }

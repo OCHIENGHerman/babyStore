@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('image_url');
             $table->integer('price');
             $table->integer('quantity');
-            $table->string('category');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }

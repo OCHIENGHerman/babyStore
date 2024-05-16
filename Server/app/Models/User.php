@@ -45,13 +45,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function selectedGoods()
-    {
-        return $this->hasMany(SelectedGoods::class);
-    }
-
     public function order()
     {
-        return $this->hasMany(Orders::class);
+        return $this->hasMany(Order::class);
     }
 }
