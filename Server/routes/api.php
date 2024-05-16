@@ -65,7 +65,8 @@ Route::group([
 });
 
 // Mpesa
-Route::get('/mpesa/access-token', [MpesaController::class, 'getAcessToken']);
+Route::get('/mpesa/access-token', [MpesaController::class, 'getAccessToken']);
+Route::post('/mpesa/stk-push', [MpesaController::class, 'stkPush']);
 
 
 

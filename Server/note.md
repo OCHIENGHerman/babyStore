@@ -8,6 +8,11 @@
 2. Setup the getAccess token api route for testing since the auth function will be automatically inherited by subsequent functions.
 3. Populate the .env file with your 'consumerKey', 'secretKey' and the 'authUrl'.  
 
+## stk Push
+1. Create Controller
+2. Set up api routes 
+3. Populate the .env file
+
 ## Possible Errors 
 
 1. ERROR: cURL error 60: SSL certificate problem: unable to get local issuer
