@@ -87,6 +87,12 @@ Route::post('/carts', [CartController::class, 'storeCart']);
 Route::put('/carts/{id}', [CartController::class, 'updateCart']);
 Route::delete('/carts/{id}', [CartController::class, 'destroyCart']);
 
+// Order
+Route::get('/orders', [OrderController::class, 'indexOrders']);
+Route::get('/orders/{id}', [OrderController::class, 'showOrder']);
+Route::post('/orders', [OrderController::class, 'storeOrder']);
+Route::delete('/orders/{id}', [OrderController::class, 'destroyOrder']);
+
 
 
 
