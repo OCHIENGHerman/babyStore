@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SelectedProductsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MpesaController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -67,6 +68,13 @@ Route::group([
 // Mpesa
 Route::get('/mpesa/access-token', [MpesaController::class, 'getAccessToken']);
 Route::post('/mpesa/stk-push', [MpesaController::class, 'stkPush']);
+
+// Category 
+Route::get('/categories', [CategoryController::class, 'indexCategories']);
+Route::get('/categories/{id}', [CategoryController::class, 'singleCategory']);
+Route::post('/categories', [CategoryController::class, 'storeCategory']);
+Route::put('/categories/{id}', [CategoryController::class, 'updateCategory']);
+Route::delete('/categories/{id}', [CategoryController::class, 'destroyCategory']);
 
 
 
