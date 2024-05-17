@@ -39,7 +39,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function storeCategory(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:50'],

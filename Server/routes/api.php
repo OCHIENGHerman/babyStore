@@ -6,6 +6,7 @@ use App\Http\Controllers\SelectedProductsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MpesaController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -74,7 +75,17 @@ Route::get('/categories', [CategoryController::class, 'indexCategories']);
 Route::get('/categories/{id}', [CategoryController::class, 'singleCategory']);
 Route::post('/categories', [CategoryController::class, 'storeCategory']);
 Route::put('/categories/{id}', [CategoryController::class, 'updateCategory']);
+
+// Check on it later 
 Route::delete('/categories/{id}', [CategoryController::class, 'destroyCategory']);
+
+
+// Cart
+Route::get('/carts', [CartController::class, 'indexCarts']);
+Route::get('/carts/{id}', [CartController::class, 'showCart']);
+Route::post('/carts', [CartController::class, 'storeCart']);
+Route::put('/carts/{id}', [CartController::class, 'updateCart']);
+Route::delete('/carts/{id}', [CartController::class, 'destroyCart']);
 
 
 
