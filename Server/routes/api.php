@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MpesaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -92,6 +93,13 @@ Route::get('/orders', [OrderController::class, 'indexOrders']);
 Route::get('/orders/{id}', [OrderController::class, 'showOrder']);
 Route::post('/orders', [OrderController::class, 'storeOrder']);
 Route::delete('/orders/{id}', [OrderController::class, 'destroyOrder']);
+
+// OrderItem
+Route::get('/order-items', [OrderItemController::class, 'indexOrderItems']);
+Route::get('/order-items/{id}', [OrderItemController::class, 'showOrderItem']);
+Route::post('/order-items', [OrderItemController::class, 'storeOrderItem']);
+Route::put('/order-items/{id}', [OrderItemController::class, 'updateOrderItem']);
+Route::delete('/orders/{id}', [OrderItemController::class, 'destroyOrderItem']);
 
 
 
