@@ -8,6 +8,7 @@ use App\Http\Controllers\MpesaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -101,6 +102,11 @@ Route::post('/order-items', [OrderItemController::class, 'storeOrderItem']);
 Route::put('/order-items/{id}', [OrderItemController::class, 'updateOrderItem']);
 Route::delete('/orders/{id}', [OrderItemController::class, 'destroyOrderItem']);
 
-
+// Payment
+Route::get('/payments', [PaymentController::class, 'indexPayments']);
+Route::get('/payments/{id}', [PaymentController::class, 'showPayment']);
+Route::post('/payments', [PaymentController::class, 'storePayments']);
+Route::put('/payments/{id}', [PaymentController::class, 'updatePayment']);
+Route::delete('/payments/{id}', [PaymentController::class, 'destroyPayment']);
 
 
