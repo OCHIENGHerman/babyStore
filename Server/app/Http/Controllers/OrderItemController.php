@@ -37,7 +37,7 @@ class OrderItemController extends Controller
         {
             return response()->json([
                 'error' => $validator->errors()->all()
-            ]);
+            ], 422);
         }
 
         $orderItem = Order_Item::create($request->all());

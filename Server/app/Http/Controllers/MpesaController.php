@@ -70,6 +70,10 @@ class MpesaController extends Controller
 
                 $stkUrl = env('MPESA_STK_ENDPOINT');
 
+                $mpesaDesciption = env('MPESA_DESCRIPTION');
+
+                $accountReference = env('MPESA_ACCOUNT_REFERENCE');
+
                 $stkPassword = base64_encode($shortCode.$passkey.$timestamp);
 
                 $headers = [
@@ -83,12 +87,12 @@ class MpesaController extends Controller
                     'Timestamp' => $timestamp,
                     'TransactionType' => 'CustomerPayBillOnline',
                     'Amount' => $request->amount,
-                    'PartyA' => $request->partyA_phone_number,
+                    'PartyA' => $request->phone_number,
                     'PartyB' => $shortCode,
                     'PhoneNumber' => $request->phone_number,
                     'CallBackURL' => env('MPESA_CALLBACK_URL'),
-                    'AccountReference' => $request->reference,
-                    'TransactionDesc' => $request->description
+                    'AccountReference' => $accountReference,
+                    'TransactionDesc' => $mpesaDesciption
                 ];
 
                 $response = Http::withHeaders($headers)->post($stkUrl, $requestBody);
