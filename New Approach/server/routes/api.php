@@ -16,6 +16,8 @@ Route::get('/hello', function () {
     return 'Hello, World!';
 });
 
+Route::get( '/unauthenticated', [AuthController::class, 'unauthenticated'])->name('login');
+
 Route::post("register", [AuthController::class, "register"]);
 Route::post("login", [AuthController::class, "login"]);
 

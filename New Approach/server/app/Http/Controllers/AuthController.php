@@ -80,10 +80,13 @@ class AuthController extends Controller
                 ], 401);
             }
 
+            $user = auth()->user();
+
             return response()->json([
                 "status" => true,
                 "message" => "User logged in successfully",
                 "token" => $token,
+                "user" => $user
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -146,5 +149,13 @@ class AuthController extends Controller
                 "error" => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function unauthenticated()
+    {
+        return response()->json([
+            "status" => false,
+            "message" => "Unauthenticated. Please login first",
+        ], 401);
     }
 }
