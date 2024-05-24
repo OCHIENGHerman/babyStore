@@ -12,10 +12,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\PaymentController;
 
-Route::get('/hello', function () {
-    return 'Hello, World!';
-});
-
+// Handling unauthenticated routes
 Route::get( '/unauthenticated', [AuthController::class, 'unauthenticated'])->name('login');
 
 Route::post("register", [AuthController::class, "register"]);
