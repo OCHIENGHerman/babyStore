@@ -102,7 +102,7 @@ class AuthController extends Controller
 
             return response()->json([
                 "status" => true,
-                "message" => "User successfully registered",
+                "message" => "Admin successfully registered",
                 "user" => $user
             ]);
         } catch (Exception $e) {
@@ -145,7 +145,7 @@ class AuthController extends Controller
 
             return response()->json([
                 "status" => true,
-                "message" => "User successfully registered",
+                "message" => "Super admin successfully registered",
                 "user" => $user
             ]);
         } catch (Exception $e) {

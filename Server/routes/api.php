@@ -15,27 +15,57 @@ use App\Http\Controllers\PaymentController;
 // Handling unauthenticated routes
 Route::get( '/unauthenticated', [AuthController::class, 'unauthenticated'])->name('login');
 
+// Unauthenticated routes
 Route::post("register-normal-user", [AuthController::class, "registerNormalUser"]);
-Route::post("register-admin", [AuthController::class, "registerAdmin"]);
-Route::post("register-super-admin", [AuthController::class, "registerSuperAdmin"]);
+Route::post("login", [AuthController::class, "login"]);
 
 Route::group([
-    "middleware" => ["auth:api"]
+    "middleware" => ["auth:api", "role:normal_user"]
 ], function(){
-
+    // User data
     Route::get("profile", [AuthController::class, "profile"]);
     Route::get("refresh", [AuthController::class, "refreshToken"]);
     Route::get("logout", [AuthController::class, "logout"]);
-    Route::get("users", [AuthController::class, "indexUsers"]);
+
+    // Mpesa
+    Route::post('/mpesa/stk-push', [MpesaController::class, 'stkPush']);
+
+    // Products
+    Route::get('/products', [ProductController::class, 'getProducts']);
+    Route::get('/products/{id}', [ProductController::class, 'singleProduct']);
 });
 
-// Products
-Route::get('/products', [ProductController::class, 'getProducts']);
-Route::get('/products/{id}', [ProductController::class, 'singleProduct']);
+// Super_Admin Routes
+Route::group([
+    "middleware" => ["auth:api", "role:super_admin"]
+], function(){
+    // Register admin and check users
+    Route::post("register-admin", [AuthController::class, "registerAdmin"]);
+    Route::get("users", [AuthController::class, "indexUsers"]);
 
-// Mpesa
-Route::get('/mpesa/access-token', [MpesaController::class, 'getAccessToken']);
-Route::post('/mpesa/stk-push', [MpesaController::class, 'stkPush']);
+    // Super_Admin data
+    Route::get("profile", [AuthController::class, "profile"]);
+    Route::get("refresh", [AuthController::class, "refreshToken"]);
+    Route::get("logout", [AuthController::class, "logout"]);
+
+    // Mpesa
+    Route::get('/mpesa/access-token', [MpesaController::class, 'getAccessToken']);
+
+    // Whitelist Ip
+    Route::post("register-super-admin", [AuthController::class, "registerSuperAdmin"]);
+});
+
+Route::group([
+    "middleware" => ["auth:api", "role:admin"]
+], function(){
+    // Admin data
+    Route::get("profile", [AuthController::class, "profile"]);
+    Route::get("refresh", [AuthController::class, "refreshToken"]);
+    Route::get("logout", [AuthController::class, "logout"]);
+
+    // Products
+});
+
 
 // Category 
 Route::get('/categories', [CategoryController::class, 'indexCategories']);
