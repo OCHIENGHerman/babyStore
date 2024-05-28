@@ -27,22 +27,34 @@ class AuthController extends Controller
         }
     }
 
-    public function register(Request $request)
+    public function registerNormalUser(Request $request)
     {
         try
         {
-            $request->validate([
+            $validator = validator::make($request->all(), ([
                 'first_name' => 'required|string|max:255',
                 'last_name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:8|confirmed',
-            ]);
+                'phone_number' => 'string|min:7|max:15',
+            ]));
+
+            if($validator->fails())
+            {
+                return response()->json([
+                    "status" => false,
+                    "message" => "validation error",
+                    "errors" => $validator->errors()
+                ], 400);
+            }
             
             $user = User::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
+                'phone_number' => $request->phone_number,
+                'role' => 'normal_user'
             ]);
 
             return response()->json([
@@ -57,6 +69,93 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+    public function registerAdmin(Request $request)
+    {
+        try
+        {
+            $validator = validator::make($request->all(), ([
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'phone_number' => 'string|min:7|max:15',
+            ]));
+
+            if($validator->fails())
+            {
+                return response()->json([
+                    "status" => false,
+                    "message" => "validation error",
+                    "errors" => $validator->errors()
+                ], 400);
+            }
+            
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'phone_number' => $request->phone_number,
+                'role' => 'admin'
+            ]);
+
+            return response()->json([
+                "status" => true,
+                "message" => "User successfully registered",
+                "user" => $user
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => false,
+                "error" => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function registerSuperAdmin(Request $request)
+    {
+        try
+        {
+            $validator = validator::make($request->all(), ([
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'phone_number' => 'string|min:7|max:15',
+            ]));
+
+            if($validator->fails())
+            {
+                return response()->json([
+                    "status" => false,
+                    "message" => "validation error",
+                    "errors" => $validator->errors()
+                ], 400);
+            }
+            
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'phone_number' => $request->phone_number,
+                'role' => 'super_admin'
+            ]);
+
+            return response()->json([
+                "status" => true,
+                "message" => "User successfully registered",
+                "user" => $user
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                "status" => false,
+                "error" => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
     public function login(Request $request)
     {

@@ -22,6 +22,8 @@ class User extends Authenticatable implements JWTSubject
         'last_name',
         'email',
         'password',
+        'phone_number',
+        'role',
     ];
 
     /**
@@ -44,6 +46,7 @@ class User extends Authenticatable implements JWTSubject
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => 'string',
         ];
     }
 

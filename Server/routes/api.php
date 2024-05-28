@@ -15,8 +15,9 @@ use App\Http\Controllers\PaymentController;
 // Handling unauthenticated routes
 Route::get( '/unauthenticated', [AuthController::class, 'unauthenticated'])->name('login');
 
-Route::post("register", [AuthController::class, "register"]);
-Route::post("login", [AuthController::class, "login"]);
+Route::post("register-normal-user", [AuthController::class, "registerNormalUser"]);
+Route::post("register-admin", [AuthController::class, "registerAdmin"]);
+Route::post("register-super-admin", [AuthController::class, "registerSuperAdmin"]);
 
 Route::group([
     "middleware" => ["auth:api"]
