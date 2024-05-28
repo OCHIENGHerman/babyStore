@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderItemController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      */
     public function indexOrderItems()
