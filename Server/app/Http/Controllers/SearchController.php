@@ -8,7 +8,7 @@ use App\Models\User;
 
 class SearchController extends Controller
 {
-    public function search(Request $request)
+    public function searchAllModels(Request $request)
     {
         $query = $request->input('query');
 
@@ -22,6 +22,17 @@ class SearchController extends Controller
 
         return response()->json(
             $results
+        );
+    }
+
+    public function searchProducts(Request $request)
+    {
+        $query = $request->input('query');
+
+        $products = Product::search($query)->get();
+
+        return response()->json(
+            $products
         );
     }
 }

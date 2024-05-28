@@ -11,6 +11,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SearchController;
 
 // Handling unauthenticated routes
 Route::get( '/unauthenticated', [AuthController::class, 'unauthenticated'])->name('login');
@@ -18,6 +19,8 @@ Route::get( '/unauthenticated', [AuthController::class, 'unauthenticated'])->nam
 // Unauthenticated routes
 Route::post("register-normal-user", [AuthController::class, "registerNormalUser"]);
 Route::post("login", [AuthController::class, "login"]);
+Route::get( 'search', [SearchController::class, 'search']);
+Route::get( 'search-products', [SearchController::class, 'searchProducts']);
 
 Route::group([
     "middleware" => ["auth:api", "role:normal_user"]
