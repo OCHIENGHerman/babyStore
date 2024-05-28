@@ -1,13 +1,13 @@
-import './App.css'
+import { Routes, Route } from "react-router-dom"
+import Homepage from "./pages/home"
 
-function App() {
+export default function App() {
   
-
   return (
     <>
-      <h1>New App</h1>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+      </Routes>
     </>
   )
 }
-
-export default App
