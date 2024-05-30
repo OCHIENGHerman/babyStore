@@ -22,6 +22,10 @@ Route::post("login", [AuthController::class, "login"]);
 Route::get( 'search', [SearchController::class, 'search']);
 Route::get( 'search-products', [SearchController::class, 'searchProducts']);
 
+// Products
+Route::get('/products', [ProductController::class, 'getProducts']);
+Route::get('/products/{id}', [ProductController::class, 'singleProduct']);
+
 Route::group([
     "middleware" => ["auth:api", "role:normal_user"]
 ], function(){
@@ -32,10 +36,6 @@ Route::group([
 
     // Mpesa
     Route::post('/mpesa/stk-push', [MpesaController::class, 'stkPush']);
-
-    // Products
-    Route::get('/products', [ProductController::class, 'getProducts']);
-    Route::get('/products/{id}', [ProductController::class, 'singleProduct']);
 });
 
 // Super_Admin Routes
