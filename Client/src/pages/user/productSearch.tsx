@@ -17,19 +17,31 @@ const ProductSearch: React.FC = () => {
     const [searchResults, setSearchResults] = useState<Product[]>([]);
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+    const [message, setMessage] = useState<string | null>(null);
 
     const searchQuery = searchParams.get('query') || '';
 
     useEffect(() => {
         const fetchSearchResults = async () => {
+            setLoading(true);
+            setError(null);
+            setMessage(null);
 
             try {
                 const response = await axios.get<Product[]>(
                     `${searchProducts}?query=${searchQuery}`
                 );
                 setSearchResults(response.data);
+                if (response.data.length === 0) {
+                    setMessage('No search results found.');
+                }
             } catch (error) {
+                setError('Error fetching search results.');
                 console.error('Error featching search results:', error);
+            } finally {
+                setLoading(false);
             }
         };
         if (searchQuery) {
@@ -50,7 +62,10 @@ const ProductSearch: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
             />
-            {searchResults.length > 0 ? (
+            {loading && <p>Loading...</p>}
+            {error && <p>{error}</p>}
+            {message && <p>{message}</p>}
+            {!loading && searchResults.length > 0 && (
                 <ul>
                     {searchResults.map((product) => (
                         <li key={product.id}>
@@ -61,8 +76,6 @@ const ProductSearch: React.FC = () => {
                         </li>
                     ))}
                 </ul>
-            ): (
-                <p>No search results found.</p>
             )}
         </div>
     )
