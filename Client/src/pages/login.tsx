@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { loginUrl } from '../url';
+import { useAuth } from '../hooks/useAuth';
 
 interface LoginData {
     email: string;
@@ -10,6 +9,7 @@ interface LoginData {
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [formData, setFormData] = useState<LoginData>({
         email: '',
         password: '',
@@ -29,22 +29,11 @@ const Login: React.FC = () => {
         setMessage(null);
 
         try {
-            const response = await axios.post(loginUrl, formData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-            if (response.data.status) {
-                // console.log(response.data.message);
-                setMessage(response.data.message);
-                navigate('/');
-            } else {
-                // console.error(response.data.message);
-                setError(response.data.error);
-            }
+            await login(formData.email, formData.password);
+            navigate('/');
         } catch (error) {
             setError('An error occurred. Please try again later.');
-            // console.error(error);
+            console.error(error);
         } finally {
             setLoading(false);
         }
