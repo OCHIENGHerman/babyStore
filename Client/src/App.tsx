@@ -5,18 +5,21 @@ import AdminDashboard from "./pages/admin/adminDashboard"
 import Signup from "./pages/signup"
 import Login from "./pages/login"
 import ProductSearch from "./pages/user/productSearch"
+import UserLayout from "./layout/userLayout"
 
 export default function App() {
   
   return (
     <>
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route path="/" element={<UserLayout />}>
+          <Route index element={<Homepage />} />
+          <Route path="/search" element={<ProductSearch />} />
+        </Route>
         <Route path="/super_admin" element={<SuperAdminDashboard />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/search" element={<ProductSearch />} />
       </Routes>
     </>
   )
