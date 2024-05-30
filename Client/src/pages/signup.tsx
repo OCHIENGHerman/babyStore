@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { registerNormalUser } from '../url';
 
 interface RegisterData {
     first_name: string;
@@ -36,7 +37,7 @@ const Signup: React.FC = () => {
         setMessage(null);
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/register-normal-user', formData, {
+            const response = await axios.post(registerNormalUser, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
