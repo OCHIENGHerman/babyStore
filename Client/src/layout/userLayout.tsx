@@ -30,6 +30,7 @@ const UserLayout: React.FC = () => {
                     <ul>
                         <li>
                             <Link to="/">Home</Link>
+                            <Link to="/sell">Sell</Link>
                         </li>
                     </ul>
                 </nav>
