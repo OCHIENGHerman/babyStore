@@ -19,7 +19,7 @@ Route::get( '/unauthenticated', [AuthController::class, 'unauthenticated'])->nam
 // Unauthenticated routes
 Route::post("register-normal-user", [AuthController::class, "registerNormalUser"]);
 Route::post("login", [AuthController::class, "login"]);
-Route::get( 'search', [SearchController::class, 'search']);
+Route::get( 'search', [SearchController::class, 'searchAllModels']);
 Route::get( 'search-products', [SearchController::class, 'searchProducts']);
 
 // Products
