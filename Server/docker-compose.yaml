@@ -1,13 +1,10 @@
-networks:
-  laravel:
-    driver: bridge
+version: '3'
 
 services:
   nginx:
     image: nginx:alpine
     container_name: nginx
     restart: unless-stopped
-    tty: true
     ports:
       - "7000:80"
     volumes:
@@ -15,8 +12,6 @@ services:
       - .:/var/www/app:delegated
     depends_on:
       - php
-    networks:
-      - laravel
 
   php:
     build:
@@ -24,10 +19,9 @@ services:
       dockerfile: Dockerfile
     container_name: php
     restart: unless-stopped
-    tty: true
-    expose:
-      - "9000"
     volumes:
       - .:/var/www/app:delegated
-    networks:
-      - laravel
+
+networks:
+  default:
+    driver: bridge 
