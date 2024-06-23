@@ -1,35 +1,32 @@
-# Use PHP with Apache as the base image
-FROM php:8.2-apache as web
+# use PHP 8.2
+FROM php:8.2-fpm
 
-# Install Additional System Dependencies
+# Install common php extension dependencies
 RUN apt-get update && apt-get install -y \
+    libfreetype-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    zlib1g-dev \
     libzip-dev \
-    zip
-
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Enable Apache mod_rewrite for URL rewriting
-RUN a2enmod rewrite
-
-
-# Configure Apache DocumentRoot to point to Laravel's public directory
-# and update Apache configuration files
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
-# Copy the application code
-COPY . /var/www/html
+    unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install zip
 
 # Set the working directory
-WORKDIR /var/www/html
+COPY . /var/www/app
+WORKDIR /var/www/app
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN chown -R www-data:www-data /var/www/app \
+    && chmod -R 775 /var/www/app/storage
 
-# Install project dependencies
+
+# install composer
+COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
+
+# copy composer.json to workdir & install dependencies
+COPY composer.json ./
 RUN composer install
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Set the default command to run php-fpm
+CMD ["php-fpm"]
