@@ -1,24 +1,20 @@
-FROM php:8.2
+FROM richarvey/nginx-php-fpm:latest
 
-RUN curl -sS https://getcomposer.org/installer | php -- \
-     --install-dir=/usr/local/bin --filename=composer
+COPY . .
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Image config
+ENV SKIP_COMPOSER 1
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV RUN_SCRIPTS 1
+ENV REAL_IP_HEADER 1
 
-RUN apt-get update && apt-get install -y zlib1g-dev \
-    libzip-dev \
-    unzip
+# Laravel config
+ENV APP_ENV production
+ENV APP_DEBUG true
+ENV LOG_CHANNEL stderr
 
-RUN docker-php-ext-install pdo pdo_mysql sockets zip
+# Allow composer to run as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
-RUN mkdir /app
-
-ADD . /app
-
-WORKDIR /app
-
-RUN composer install
-
-CMD php artisan serve --host=0.0.0.0 --port=8000
-
-EXPOSE 8000
+CMD ["/start.sh"]
