@@ -1,34 +1,24 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.0.20
 
-# Install essential dependencies and extensions
-RUN apk add --no-cache \
-    freetype-dev \
-    libjpeg-turbo-dev \
-    libpng-dev \
-    zip \
-    unzip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd zip
+RUN curl -sS https://getcomposer.org/installer | php -- \
+     --install-dir=/usr/local/bin --filename=composer
 
-# Set working directory
-WORKDIR /var/www/app
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install composer
-COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
+RUN apt-get update && apt-get install -y zlib1g-dev \
+    libzip-dev \
+    unzip
 
-# Copy only composer files and install dependencies
-COPY composer.json composer.lock ./
-RUN composer install --no-scripts --no-autoloader
+RUN docker-php-ext-install pdo pdo_mysql sockets zip
 
-# Copy the rest of the application
-COPY . .
+RUN mkdir /app
 
-# Generate optimized autoloader and run any necessary scripts
-RUN composer dump-autoload --optimize && \
-    composer run-script post-install-cmd
+ADD . /app
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/app \
-    && chmod -R 775 /var/www/app/storage
+WORKDIR /app
 
-CMD ["php-fpm"]
+RUN composer install
+
+CMD php artisan serve --host=0.0.0.0 --port=8000
+
+EXPOSE 8000
