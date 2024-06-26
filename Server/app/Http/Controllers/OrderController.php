@@ -2,54 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrderItem;
-use App\Models\Orders;
-use App\Models\Products;
+use App\Models\Order;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-    public function createOrder(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function indexOrders()
     {
-        //get the current user id
-        $user = Auth::user();
-        $user_id = $user->id;
+        $orders = Order::all();
 
-        $order_details = Orders::create([
-            'user_id' => $user_id,
-            'tax' => $request->input('tax'),
-            'total_amount' => $request->input('total_amount')
-        ]);
-
-        //retrieve the order id
-        $order_id = $order_details->id;
-
-
-        $createdOrderItem = [];
-
-        //create order items for each item in the request
-
-        foreach($request->input('items') as $item){
-            
-            $order_item = OrderItem::create([
-                'product_id' => $item['product_id'],
-                'order_id' => $order_id,
-                'price' => $item['price']   //accessing price direct from array
-            ]);
-
-            $createdOrderItem[] = $order_item;
-        }
-
-
-        return response()->json($createdOrderItem);
-
+        return response()->json(
+            $orders
+        );
     }
 
-    public function numberOfOrders()
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storeOrder(Request $request)
     {
-        $orders = Orders::all();
+        $validator = Validator::make($request->all(), [
+            'user_id' => ['required', 'exists:users,id'],
+        ]);
 
-        return count($orders);
+        if ($validator->fails()) 
+        {
+            return response()->json([
+                'status' => false,
+                'error' => $validator->errors()->all()
+            ], 422);
+        }
+
+        $order = Order::create($request->all());
+
+        return response()->json([
+            "message" => "Order created successfully",
+            "order" => $order
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showOrder($id)
+    {
+        $order = Order::find($id);
+
+        if(!$order) {
+            return response()->json([
+                'message' => 'Order not found'
+            ], 404);
+        }
+
+        return response()->json(
+            $order
+        );
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroyOrder($id)
+    {
+        $order = Order::find($id);
+
+        if (!$order) {
+            return response()->json([
+                'message' => 'Order not found'
+            ], 404);
+        }
+
+        $order->delete();
+
+        return response()->json([
+            'message' => 'Order deleted successfully'
+        ]);
     }
 }
